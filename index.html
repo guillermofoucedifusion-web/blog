@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog profesional</title>
+<style>
+/* ═══ 1. COLORES Y TIPOGRAFÍA (cambia aquí el aspecto de toda la web) ═══ */
+:root{--c:#232a5c;--ac:#3fbf9f;--bg:#f1f3fa;--lila:#dcd9f5;--ink:#2a2f45;--mu:#646b86;--w:#fff}
+*{box-sizing:border-box;margin:0}
+body{font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
+h1,h2,h3{font-family:"Iowan Old Style","Palatino Linotype",Palatino,serif;line-height:1.2}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+
+/* ═══ 2. CABECERA Y PESTAÑAS ═══ */
+header{position:sticky;top:0;z-index:5;background:var(--c);color:#fff;display:flex;align-items:center;gap:18px;padding:10px 22px;flex-wrap:wrap}
+header b{font:700 20px "Iowan Old Style",Palatino,serif}
+nav{display:flex;gap:4px;flex:1;overflow-x:auto}
+nav a{color:#ffffffcc;text-decoration:none;padding:8px 15px;border-radius:99px;white-space:nowrap}
+nav a:hover{background:#ffffff22}
+nav a.on{background:var(--ac);color:var(--c);font-weight:700}
+.lang button{background:none;border:1px solid #fff8;color:#fff;padding:4px 11px;cursor:pointer;border-radius:99px}
+.lang button.on{background:#fff;color:var(--c);font-weight:700}
+main{max-width:1100px;margin:0 auto;padding:28px 20px 70px;animation:in .2s}
+@keyframes in{from{opacity:0}}
+
+/* ═══ 3. PORTADA ═══ */
+.hero{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;background:var(--c);color:#fff;border-radius:28px;padding:48px 52px 48px 44px;overflow:hidden}
+.hero h1{font-size:clamp(32px,6vw,54px)}
+.hero h2{font:400 20px system-ui;color:var(--ac);margin:10px 0 12px}
+.hero p{max-width:520px;opacity:.9;margin-bottom:22px}
+.foto{width:190px;height:190px;border-radius:50%;background:var(--lila) center/cover;color:var(--c);display:grid;place-items:center;font:700 54px Palatino,serif;
+ box-shadow:0 0 0 12px #ffffff1a,0 0 0 30px #ffffff10,0 0 0 50px #ffffff08}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:22px 0}
+.stat{background:var(--w);border:1px solid #d5d9ea;border-radius:12px;padding:16px 18px;text-decoration:none;color:var(--ink)}
+.stat:hover{border-color:var(--ac);background:#f0fbf8}
+.stat b{display:block;font:700 40px Palatino,serif;color:var(--c)}
+.stat span{color:var(--mu);font-size:14px}
+.tit{margin:30px 0 14px}.sub{color:var(--mu);margin:4px 0 18px}
+.bio{background:var(--w);padding:16px 20px;border-left:5px solid var(--ac);border-radius:6px 12px 12px 6px;margin-bottom:20px}
+
+/* ═══ 4. TARJETAS (artículos, prensa, vídeos…) ═══ */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.card{background:var(--w);border:1px solid #d5d9ea;border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.card:hover{border-color:var(--ac)}
+.img{height:140px;background:var(--lila) center/cover;display:grid;place-items:center;font-size:44px;position:relative}
+.play{position:absolute;background:#232a5ccc;color:#fff;border-radius:50%;width:48px;height:48px;display:grid;place-items:center;font-style:normal}
+.cuerpo{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.meta{display:flex;justify-content:space-between;align-items:center}.meta small{color:var(--mu)}
+.tag{background:var(--lila);color:var(--c);font-size:12px;font-weight:600;padding:2px 10px;border-radius:99px}
+.cuerpo h3{font-size:19px}.cuerpo p{color:var(--mu);font-size:15px;flex:1}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.tl .card{border-left:5px solid var(--ac)}.vacio{color:var(--mu)}.redes{display:flex;gap:10px;flex-wrap:wrap}
+
+/* ═══ 5. BOTONES, BUSCADOR Y FILTROS ═══ */
+.btn{background:var(--ac);color:var(--c);border:0;padding:9px 18px;border-radius:99px;cursor:pointer;text-decoration:none;font:700 14px system-ui;display:inline-block}
+.btn:hover{background:#fff;box-shadow:inset 0 0 0 2px var(--ac)}
+.btn.claro{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
+.card .btn.claro,.edit .btn.claro{color:var(--c)}
+.barra{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
+.barra input{padding:10px 16px;border:1.5px solid #c3c8de;border-radius:99px;min-width:230px;font:inherit}
+.chips{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+.chip{border:1.5px solid var(--c);background:#fff;color:var(--c);padding:5px 14px;border-radius:99px;cursor:pointer}
+.chip.on{background:var(--c);color:#fff}
+
+/* ═══ 6. VENTANA EMERGENTE, AVISOS Y PANEL DE EDICIÓN ═══ */
+#modal{display:none;position:fixed;inset:0;background:#10153a99;z-index:20;place-items:center;padding:16px;overflow:auto}
+#modal.on{display:grid}
+.caja{background:#fff;border-radius:18px;padding:26px;width:min(660px,100%);position:relative;max-height:92vh;overflow:auto}
+.x{position:absolute;right:14px;top:10px;border:0;background:none;font-size:22px;cursor:pointer}
+.vid iframe,.vid video{width:100%;aspect-ratio:16/9;border:0;border-radius:10px}
+.f{display:grid;gap:10px;margin:14px 0}.f label{display:grid;gap:4px;font-size:13px;color:var(--mu)}
+.f span{display:flex;gap:6px}
+.f input,.f textarea{flex:1;padding:8px 10px;border:1.5px solid #c3c8de;border-radius:8px;font:inherit;min-width:0}
+.ayuda{font-size:13px;color:var(--mu);margin-bottom:12px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,90px);background:var(--c);color:#fff;padding:12px 20px;border-radius:12px;transition:transform .3s;z-index:30}
+#toast.on{transform:translate(-50%,0)}
+.edit{background:#ffe08a;padding:10px 22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px}.edit span{flex:1;min-width:240px}
+@media(max-width:700px){.hero{grid-template-columns:1fr;padding:32px 26px}.foto{width:130px;height:130px;font-size:40px;order:-1;margin:20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+ <b id="marca"></b>
+ <nav id="nav"></nav>
+ <div class="lang"><button id="l-es" onclick="setLang('es')">ES</button> <button id="l-en" onclick="setLang('en')">EN</button></div>
+</header>
+<div id="barra"></div>
+<main id="vista"></main>
+<div id="modal" onclick="if(event.target==this)cerrar()"></div>
+<div id="toast"></div>
+
+<!-- Aquí se carga TODO el contenido editable -->
+<script src="contenido.js"></script>
+<script>
+if(typeof SITIO==='undefined'){document.body.innerHTML='<p style="padding:30px">Hay un error en contenido.js: revisa que no falte ninguna comilla, coma o llave.</p>';throw 0}
+
+/* ═══ A. TEXTOS FIJOS DE LA WEB (botones, pestañas) en español e inglés ═══ */
+const UI={
+ es:{inicio:'Inicio',publicaciones:'Publicaciones',prensa:'Prensa',videos:'Vídeos',propuestas:'Propuestas',trayectoria:'Trayectoria',contacto:'Contacto',
+  buscar:'Buscar…',todos:'Todos',abrir:'Abrir enlace',ver:'Ver vídeo',vacio:'Sin resultados',cv:'Descargar CV',ultimo:'Lo último',escribir:'Escribir un correo',redes:'Redes sociales y contacto',novid:'Añade un enlace de YouTube o un archivo .mp4',
+  sub:{publicaciones:'Artículos y libros',prensa:'Apariciones en prensa escrita',videos:'Entrevistas y conferencias',propuestas:'Comentarios y propuestas',trayectoria:'Formación y experiencia'}},
+ en:{inicio:'Home',publicaciones:'Publications',prensa:'Press',videos:'Videos',propuestas:'Proposals',trayectoria:'Career',contacto:'Contact',
+  buscar:'Search…',todos:'All',abrir:'Open link',ver:'Watch video',vacio:'No results',cv:'Download CV',ultimo:'Latest',escribir:'Send an email',redes:'Social media and contact',novid:'Add a YouTube link or an .mp4 file',
+  sub:{publicaciones:'Articles and books',prensa:'Press coverage',videos:'Interviews and talks',propuestas:'Comments and proposals',trayectoria:'Education and experience'}}
+};
+const SEC=['publicaciones','prensa','videos','propuestas','trayectoria'];
+const VISTAS=['inicio',...SEC,'contacto'];
+const ICO={publicaciones:'📖',prensa:'📰',videos:'🎬',propuestas:'💡',trayectoria:'🎓'};
+
+/* ═══ B. ESTADO Y AYUDAS ═══ */
+const $=s=>document.querySelector(s);
+const EDIT=location.search.includes('editar');   // el panel solo aparece con ?editar al final de la dirección
+let lang='es',q='',tag='',D=SITIO;
+try{lang=localStorage.getItem('lang')||'es';if(EDIT&&localStorage.getItem('borrador'))D=JSON.parse(localStorage.getItem('borrador'))}catch(e){}
+const L=()=>UI[lang];
+const esc=s=>String(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const t=(o,k)=>esc(o[k+'_'+lang]||o[k+'_es']);   // coge el texto en el idioma activo
+
+/* ═══ C. NAVEGACIÓN ENTRE PESTAÑAS (cada pestaña tiene su propio enlace: #prensa, #videos…) ═══ */
+function ir(){
+ const v=VISTAS.includes(location.hash.slice(1))?location.hash.slice(1):'inicio';
+ q='';tag='';
+ $('#marca').textContent=D.general.nombre;
+ $('#nav').innerHTML=VISTAS.map(x=>`<a href="#${x}" class="${x==v?'on':''}">${L()[x]}</a>`).join('');
+ ['es','en'].forEach(l=>$('#l-'+l).classList.toggle('on',l==lang));
+ document.documentElement.lang=lang;document.title=D.general.nombre;
+ document.documentElement.style.setProperty('--c',D.general.color||'#232a5c');
+ const m=$('#vista');m.style.animation='none';m.offsetHeight;m.style.animation='';
+ m.innerHTML=v=='inicio'?vInicio():v=='contacto'?vContacto():vSeccion(v);
+ if(v=='inicio')contar();if(SEC.includes(v))lista(v);
+ barraEdicion();window.scrollTo(0,0);
+}
+addEventListener('hashchange',ir);
+function setLang(l){lang=l;try{localStorage.setItem('lang',l)}catch(e){}ir()}
+
+/* ═══ D. PÁGINAS ═══ */
+// Tarjeta individual (se repite para cada artículo, vídeo, etc.)
+function tarjeta(it,s,i){
+ const y=(it.enlace||'').match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
+ const im=it.imagen||(s=='videos'&&y?`https://img.youtube.com/vi/${y[1]}/hqdefault.jpg`:'');
+ return `<article class="card"><div class="img" style="${im?`background-image:url('${esc(im)}')`:''}">${im?'':ICO[s]}${s=='videos'?'<i class="play">▶</i>':''}</div>
+ <div class="cuerpo"><div class="meta"><span class="tag">${esc(it.etiqueta)}</span><small>${esc(it.fecha)}</small></div>
+ <h3>${t(it,'titulo')}</h3><p>${t(it,'texto')}</p>
+ <div class="acts">${s=='videos'?`<button class="btn" onclick="ver('${s}',${i})">${L().ver}</button>`:it.enlace?`<a class="btn" href="${esc(it.enlace)}" target="_blank" rel="noopener">${L().abrir}</a>`:''}
+ ${it.archivo?`<a class="btn claro" href="${esc(it.archivo)}" target="_blank">📄 PDF</a>`:''}
+ ${EDIT?`<button class="btn claro" onclick="form('${s}',${i})">✏️ Editar</button><button class="btn claro" onclick="borrar('${s}',${i})">🗑️</button>`:''}</div></div></article>`}
+
+// Pestaña con buscador: Publicaciones, Prensa, Vídeos, Propuestas, Trayectoria
+function vSeccion(s){
+ const tags=[...new Set(D[s].map(x=>x.etiqueta).filter(Boolean))];
+ return `<h2>${ICO[s]} ${L()[s]}</h2><p class="sub">${L().sub[s]}</p>
+ ${s=='trayectoria'?`<p class="bio">${esc(D.general['bio_'+lang])}</p>`:''}
+ <div class="barra"><input type="search" placeholder="${L().buscar}" oninput="q=this.value;lista('${s}')">
+ <div class="chips"><button class="chip on" onclick="filtro(this,'${s}','')">${L().todos}</button>${tags.map(g=>`<button class="chip" onclick="filtro(this,'${s}','${esc(g)}')">${esc(g)}</button>`).join('')}</div>
+ ${EDIT?`<button class="btn" onclick="form('${s}')">➕ Añadir</button>`:''}</div>
+ <div id="lista" class="grid ${s=='trayectoria'?'tl':''}"></div>`}
+function lista(s){
+ const f=D[s].map((it,i)=>[it,i]).filter(([it])=>(!tag||it.etiqueta==tag)&&JSON.stringify(Object.values(it)).toLowerCase().includes(q.toLowerCase()));
+ $('#lista').innerHTML=f.length?f.map(([it,i])=>tarjeta(it,s,i)).join(''):`<p class="vacio">${L().vacio}</p>`}
+function filtro(b,s,g){tag=g;document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c==b));lista(s)}
+
+// Portada
+function vInicio(){
+ const g=D.general,S4=SEC.slice(0,4);
+ const ult=S4.flatMap(s=>D[s].map((it,i)=>({it,s,i}))).sort((a,b)=>(b.it.fecha||'').localeCompare(a.it.fecha||'')).slice(0,3);
+ return `<section class="hero"><div><h1>${esc(g.nombre)}</h1><h2>${esc(g['cargo_'+lang])}</h2><p>${esc(g['lema_'+lang])}</p>
+ <div class="acts"><a class="btn" href="#publicaciones">${L().publicaciones}</a>${g.cv?`<a class="btn claro" href="${esc(g.cv)}" target="_blank">📄 ${L().cv}</a>`:''}<a class="btn claro" href="#contacto">${L().contacto}</a></div></div>
+ <div class="foto" style="${g.foto?`background-image:url('${esc(g.foto)}')`:''}">${g.foto?'':esc(g.nombre).split(' ').map(w=>w[0]).slice(0,2).join('')}</div></section>
+ <div class="stats">${S4.map(s=>`<a class="stat" href="#${s}"><b data-n="${D[s].length}">${D[s].length}</b><span>${ICO[s]} ${L()[s]}</span></a>`).join('')}</div>
+ <h2 class="tit">${L().ultimo}</h2><div class="grid">${ult.map(x=>tarjeta(x.it,x.s,x.i)).join('')}</div>`}
+function contar(){ // los números de la portada suben al cargar
+ if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+ document.querySelectorAll('[data-n]').forEach(e=>{const n=+e.dataset.n;if(!n)return;let k=0;e.textContent=0;const id=setInterval(()=>{e.textContent=++k;if(k>=n)clearInterval(id)},70)})}
+
+// Contacto y redes
+function vContacto(){const g=D.general;return `<h2>✉️ ${L().contacto}</h2><p class="sub">${L().redes}</p>
+ <div class="redes">${D.redes.map(r=>`<a class="btn" href="${esc(r.enlace)}" target="_blank" rel="noopener">${esc(r.nombre)}</a>`).join('')}
+ ${g.email?`<a class="btn claro" style="color:var(--c)" href="mailto:${esc(g.email)}">✉️ ${L().escribir}</a>`:''}</div>`}
+
+/* ═══ E. VENTANAS EMERGENTES Y AVISOS ═══ */
+function abrirVentana(h){$('#modal').innerHTML=`<div class="caja"><button class="x" onclick="cerrar()" aria-label="Cerrar">✕</button>${h}</div>`;$('#modal').classList.add('on')}
+function cerrar(){$('#modal').classList.remove('on');$('#modal').innerHTML=''}
+addEventListener('keydown',e=>e.key=='Escape'&&cerrar());
+function aviso(m){const e=$('#toast');e.textContent=m;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),4000)}
+function ver(s,i){ // reproduce un vídeo de YouTube o un .mp4 propio
+ const u=D[s][i].enlace||'',y=u.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
+ abrirVentana(`<div class="vid">${y?`<iframe src="https://www.youtube.com/embed/${y[1]}" allowfullscreen></iframe>`:/\.(mp4|webm)$/i.test(u)?`<video src="${esc(u)}" controls></video>`:`<p>${L().novid}</p>`}</div>`)}
+
+/* ═══ F. PANEL VISUAL DE EDICIÓN (solo se activa con ?editar) ═══ */
+// Campos del formulario: [nombre interno, texto que ves, ¿lleva botón de archivo?]
+const CAMPOS=[['titulo_es','Título (español)'],['titulo_en','Título (inglés)'],['texto_es','Texto breve (español)'],['texto_en','Texto breve (inglés)'],
+ ['fecha','Fecha (ej: 2026-03)'],['etiqueta','Etiqueta (ej: Libro, Entrevista)'],['enlace','Enlace https:// o vídeo (YouTube o media/video.mp4)'],['archivo','PDF o documento (ej: media/documento.pdf)',1],['imagen','Imagen (ej: media/foto.jpg)',1]];
+const ELIGE=`<input type="file" onchange="this.previousElementSibling.value='media/'+this.files[0].name">`;
+function barraEdicion(){
+ if(!EDIT)return;
+ $('#barra').innerHTML=`<div class="edit"><b>✏️ Modo edición</b><span>① Añade o edita con los botones ➕ ✏️ 🗑️ ② Pulsa «Descargar contenido.js» ③ Sustituye ese archivo en tu carpeta y vuelve a subirla.</span>
+ <button class="btn claro" onclick="general()">⚙️ Datos generales</button><button class="btn" onclick="descargar()">⬇️ Descargar contenido.js</button><button class="btn claro" onclick="descartar()">↺ Descartar cambios</button></div>`}
+function guardar(){try{localStorage.setItem('borrador',JSON.stringify(D))}catch(e){}ir()}
+function form(s,i){
+ const it=i==null?{}:D[s][i];
+ abrirVentana(`<h3>${i==null?'➕ Nuevo elemento':'✏️ Editar elemento'}</h3><div class="f">${CAMPOS.map(([k,n,f])=>`<label>${n}<span><input name="${k}" value="${esc(it[k])}">${f?ELIGE:''}</span></label>`).join('')}</div>
+ <p class="ayuda">📁 Para PDF e imágenes: pulsa «Elegir archivo» y después copia ese archivo dentro de la carpeta <b>media</b>.</p>
+ <button class="btn" onclick="enviar('${s}',${i==null?-1:i})">💾 Guardar</button>`)}
+function enviar(s,i){const o={};document.querySelectorAll('#modal [name]').forEach(e=>o[e.name]=e.value.trim());i<0?D[s].unshift(o):D[s][i]=o;cerrar();guardar();aviso('✅ Guardado. Ahora pulsa «Descargar contenido.js».')}
+function borrar(s,i){if(confirm('¿Borrar este elemento?')){D[s].splice(i,1);guardar();aviso('🗑️ Borrado. Pulsa «Descargar contenido.js» para conservarlo.')}}
+function general(){
+ const g=D.general;
+ abrirVentana(`<h3>⚙️ Datos generales</h3><div class="f">${Object.keys(g).map(k=>`<label>${k.replace('_',' ')}<span><input name="${k}" type="${k=='color'?'color':'text'}" value="${esc(g[k])}">${/foto|cv/.test(k)?ELIGE:''}</span></label>`).join('')}
+ <label>redes (una por línea: Nombre | enlace)<textarea id="redes" rows="4">${esc(D.redes.map(r=>r.nombre+' | '+r.enlace).join('\n'))}</textarea></label></div>
+ <button class="btn" onclick="enviarGeneral()">💾 Guardar</button>`)}
+function enviarGeneral(){
+ document.querySelectorAll('#modal [name]').forEach(e=>D.general[e.name]=e.value.trim());
+ D.redes=$('#redes').value.split('\n').filter(x=>x.trim()).map(l=>{const [n,...u]=l.split('|');return{nombre:n.trim(),enlace:u.join('|').trim()}});
+ cerrar();guardar();aviso('✅ Guardado. Ahora pulsa «Descargar contenido.js».')}
+function descargar(){ // genera un contenido.js nuevo con todos tus cambios
+ const b=new Blob(['// Generado desde el panel de edición\nconst SITIO = '+JSON.stringify(D,null,2)+';'],{type:'text/javascript'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='contenido.js';a.click();
+ aviso('⬇️ Descargado. Sustituye tu contenido.js por este archivo.')}
+function descartar(){if(confirm('¿Borrar los cambios sin descargar y volver al contenido.js original?')){try{localStorage.removeItem('borrador')}catch(e){}location.reload()}}
+
+ir(); // arranca la web
+</script>
+</body>
+</html>
