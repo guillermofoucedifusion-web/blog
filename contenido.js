@@ -21,7 +21,7 @@ const SITIO = {
     lema_en:  "Ametic dolor tecum ipsin",
     bio_es:   "Lorempsur indoor sitamet dolux",
     bio_en:   "Loremsum outdoor ametic dolor",
-    foto:     "",                       // ej: "media/foto.jpg"
+    foto:     "media/foto facebook.jpeg",                       // ej: "media/foto.jpg"
     cv:       "",                       // ej: "media/curriculum.pdf"
     email:    "guillermofouce.difusion@gmail.com",
     color:    "#232a5c"                 // color principal de la web
