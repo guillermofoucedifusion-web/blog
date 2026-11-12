@@ -14,16 +14,16 @@ const SITIO = {
 
   // ── 1. DATOS GENERALES (portada y contacto) ──────────────────
   general: {
-    nombre:   "Nombre Apellido",
-    cargo_es: "Lorempsur indoor sitamet dolux",
-    cargo_en: "Loremsum outdoor ametic dolor",
+    nombre:   "Guillermo Fouce",
+    cargo_es: "Psicólogo",
+    cargo_en: "Psychologist",
     lema_es:  "Camet ipsun tecum lorex",
     lema_en:  "Ametic dolor tecum ipsin",
     bio_es:   "Lorempsur indoor sitamet dolux",
     bio_en:   "Loremsum outdoor ametic dolor",
     foto:     "",                       // ej: "media/foto.jpg"
     cv:       "",                       // ej: "media/curriculum.pdf"
-    email:    "correo@ejemplo.com",
+    email:    "guillermofouce.difusion@gmail.com",
     color:    "#232a5c"                 // color principal de la web
   },
 
